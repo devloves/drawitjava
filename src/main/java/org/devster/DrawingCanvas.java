@@ -34,7 +34,7 @@ public class DrawingCanvas extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (currentPath != null) {
-					drawablePaths.add(new DrawablePath(currentPath, currentColor));
+					drawablePaths.add(new DrawablePath(currentPath, currentColor, brushSize));
 					currentPath = null;
 					undonePaths.clear(); // Clear the undone paths when a new drawing is added
 					repaint();
@@ -61,7 +61,7 @@ public class DrawingCanvas extends JPanel {
 		// Render completed shapes
 		for (DrawablePath drawablePath : drawablePaths) {
 			g2d.setColor(drawablePath.getColor());
-			g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+			g2d.setStroke(new BasicStroke(drawablePath.getStrokeSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 			g2d.draw(drawablePath.getPath());
 		}
 
@@ -126,7 +126,7 @@ public class DrawingCanvas extends JPanel {
 	 *
 	 * @param color The color of the path
 	 */
-	private record DrawablePath(Path2D.Double path, Color color) {
+	private record DrawablePath(Path2D.Double path, Color color, int StrokeSize) {
 		/**
 		 * Returns the path to be drawn
 		 *
@@ -143,6 +143,15 @@ public class DrawingCanvas extends JPanel {
 		 */
 		public Color getColor() {
 			return color;
+		}
+
+		/**
+		 * Returns the size of the path stroke.
+		 *
+		 * @return the size of the stroke
+		 */
+		public int getStrokeSize() {
+			return StrokeSize;
 		}
 	}
 }

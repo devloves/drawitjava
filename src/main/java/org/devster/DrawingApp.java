@@ -25,7 +25,7 @@ public class DrawingApp extends JFrame {
 		getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		setForeground(Color.BLACK);
 		add(canvas);
-		canvas.setBorder(BorderFactory.createBevelBorder(1));
+		canvas.setBorder(BorderFactory.createTitledBorder("Drawing Canvas"));
 		canvas.setMaximumSize(new Dimension(480, 400));
 		JPanel sidePanel = new JPanel();
         JButton eraser = new JButton("Eraser");
