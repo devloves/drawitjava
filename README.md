@@ -2,6 +2,8 @@
 
 :star: Star the project on github - It motivates me to work!
 
+![image](https://github.com/devloves/drawitjava/assets/65783463/92eef913-7c7a-47a5-b3a5-49fa195533d5)
+
 ## Table of Content
 - [Installation](#installation)
 - [Features](#features)
