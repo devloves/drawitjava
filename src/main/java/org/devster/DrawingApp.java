@@ -37,6 +37,17 @@ public class DrawingApp extends JFrame {
             }
         });
         eraser.setSize(new Dimension(50, 50));
+		JButton bucketTool = new JButton("Bucket");
+		bucketTool.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				canvas.toggleBucketFill();
+				bucketTool.setForeground(canvas.isBucketToolEnabled() ? Color.GREEN : Color.BLACK);
+			}
+		});
+		bucketTool.setSize(new Dimension(50, 50));
+
+		sidePanel.add(bucketTool);
         sidePanel.add(eraser);
 
 		JSlider brushSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, 5);
