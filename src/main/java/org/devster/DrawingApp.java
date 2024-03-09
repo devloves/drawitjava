@@ -1,7 +1,5 @@
 package org.devster;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
@@ -9,8 +7,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * A Drawing Application that allows users to draw, erase and modify images.
+ * the application uses FlatLightLaf for its Look and Feel
+ */
 public class DrawingApp extends JFrame {
 
+	/**
+	 *  Constructs a new DrawingApp with a DrawingCanvas and a side Panel for controls.
+	 */
     public DrawingApp() {
         DrawingCanvas canvas = new DrawingCanvas();
         setVisible(true);
@@ -20,7 +25,7 @@ public class DrawingApp extends JFrame {
 		getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		setForeground(Color.BLACK);
 		add(canvas);
-		canvas.setBorder(BorderFactory.createBevelBorder(1));
+		canvas.setBorder(BorderFactory.createTitledBorder("Drawing Canvas"));
 		canvas.setMaximumSize(new Dimension(480, 400));
 		JPanel sidePanel = new JPanel();
         JButton eraser = new JButton("Eraser");
@@ -63,6 +68,12 @@ public class DrawingApp extends JFrame {
         System.out.println("Hello world!");
     }
 
+	/**
+	 * The main method that initializes the look and feel of the application
+	 * and creates a new instance of DrawingApp.
+	 *
+	 * @param args Command-line arguments ( not used )
+	 */
     public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(new FlatLightLaf());
