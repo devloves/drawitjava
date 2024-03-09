@@ -70,7 +70,23 @@ public class DrawingCanvas extends JPanel {
 			g2d.setColor(isErasing ? getBackground() : currentColor);
 			g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 			g2d.draw(currentPath);
+			if (isErasing) {
+				g2d.setColor(getBackground());
+				g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+				g2d.draw(currentPath);
+			} else {
+				g2d.setColor(currentColor);
+				g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+				g2d.draw(currentPath);
+			}
 		}
+	}
+
+	/**
+	 * returns current status of Erasing
+	 */
+	public boolean isErasing() {
+		return isErasing;
 	}
 
 	/**

@@ -17,17 +17,17 @@
 
 ## Features | 📃
 
-| Feature Name | Status |
-|--------------|--------|
-| Free Draw    | 🟢 Done   |
-| Eraser       | 🔴 Bugged    |
-| Brush Size   | 🔴 Bugged    |
-| Brush Color   | 🟢 Done    |
-| Undo | 🟢 Done    |
-| Redo  | 🟢 Done    |
-| Line Draw  | 🟡 Todo    |
-| Circle Draw  | 🟡 Todo    |
-| Bucket Fill  | 🟡 Todo    |
+| Feature Name | Status  |
+|--------------|---------|
+| Free Draw    | 🟢 Done |
+| Eraser       | 🟢 Done |
+| Brush Size   | 🟢 Done |
+| Brush Color   | 🟢 Done |
+| Undo | 🟢 Done |
+| Redo  | 🟢 Done |
+| Line Draw  | 🟡 Todo |
+| Circle Draw  | 🟡 Todo |
+| Bucket Fill  | 🟡 Todo |
 
 ### Known Bugs & Issues | ⚒️
 - Increasing Brush size also affects all the strokes within the canvas

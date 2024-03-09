@@ -33,6 +33,7 @@ public class DrawingApp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 canvas.toggleEraser();
+				eraser.setForeground(canvas.isErasing() ? Color.GREEN : Color.BLACK);
             }
         });
         eraser.setSize(new Dimension(50, 50));
