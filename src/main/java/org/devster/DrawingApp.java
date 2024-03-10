@@ -15,9 +15,9 @@ import java.util.Objects;
 public class DrawingApp extends JFrame {
 
 	/**
-	 *  Constructs a new DrawingApp with a DrawingCanvas and a side Panel for controls.
+	 * Constructs a new DrawingApp with a DrawingCanvas and a side Panel for controls.
 	 */
-    public DrawingApp() {
+	public DrawingApp() {
         DrawingCanvas canvas = new DrawingCanvas();
         setVisible(true);
         setTitle("Draw it - Java");
@@ -102,7 +102,7 @@ public class DrawingApp extends JFrame {
 	 *
 	 * @param args Command-line arguments ( not used )
 	 */
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(new FlatIntelliJLaf());
 		} catch( Exception ex ) {

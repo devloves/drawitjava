@@ -186,6 +186,11 @@ public class DrawingCanvas extends JPanel {
 		}
 	}
 
+	/**
+	 * Is bucket tool enabled boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isBucketToolEnabled() {
 		return isBucketToolOn;
 	}
@@ -203,6 +208,16 @@ public class DrawingCanvas extends JPanel {
 		private boolean isFilled;
 		private Color fillColor;
 
+		/**
+		 * Instantiates a new Drawable path.
+		 *
+		 * @param path       the path
+		 * @param color      the color
+		 * @param fillshape  the fillshape
+		 * @param StrokeSize the stroke size
+		 * @param isFilled   the is filled
+		 * @param fillColor  the fill color
+		 */
 		public DrawablePath(Path2D.Double path, Color color, Shape fillshape, int StrokeSize, boolean isFilled, Color fillColor) {
 			this.path = path;
 			this.color = color;
@@ -239,14 +254,29 @@ public class DrawingCanvas extends JPanel {
 			return strokesize;
 		}
 
+		/**
+		 * Gets fill color.
+		 *
+		 * @return the fill color
+		 */
 		public Color getFillColor() {
 			return fillColor;
 		}
 
+		/**
+		 * Sets filled color.
+		 *
+		 * @param c the c
+		 */
 		public void setFilledColor(Color c) {
 			this.fillColor = c;
 		}
 
+		/**
+		 * Is filled boolean.
+		 *
+		 * @return the boolean
+		 */
 		public boolean isFilled() {
 			return fillColor != null;
 		}
