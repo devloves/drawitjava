@@ -9,6 +9,8 @@
   </div>
 </div>
 
+<img src='https://github.com/devloves/drawitjava/assets/65783463/d095d1a6-6d7b-47a3-bed2-3cd613dc6975' width='500'>
+
 ## Table of Content
 - [Installation](#installation)
 - [Features](#features)
@@ -24,17 +26,17 @@
 
 ## Features | 📃
 
-| Feature Name | Status |
-|--------------|--------|
-| Free Draw    | 🟢 Done   |
-| Eraser       | 🔴 Bugged    |
-| Brush Size   | 🔴 Bugged    |
-| Brush Color   | 🟢 Done    |
-| Undo | 🟢 Done    |
-| Redo  | 🟢 Done    |
-| Line Draw  | 🟡 Todo    |
-| Circle Draw  | 🟡 Todo    |
-| Bucket Fill  | 🟡 Todo    |
+| Feature Name | Status  |
+|--------------|---------|
+| Free Draw    | 🟢 Done |
+| Eraser       | 🟢 Done |
+| Brush Size   | 🟢 Done |
+| Brush Color   | 🟢 Done |
+| Undo | 🟢 Done |
+| Redo  | 🟢 Done |
+| Line Draw  | 🟡 Todo |
+| Circle Draw  | 🟡 Todo |
+| Bucket Fill  | 🟡 Todo |
 
 ### Known Bugs & Issues | ⚒️
 - Increasing Brush size also affects all the strokes within the canvas
