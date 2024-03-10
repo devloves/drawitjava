@@ -20,7 +20,7 @@ public class DrawingApp extends JFrame {
     public DrawingApp() {
         DrawingCanvas canvas = new DrawingCanvas();
         setVisible(true);
-        setTitle("Drawit - Java");
+        setTitle("Draw it - Java");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
 		getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));

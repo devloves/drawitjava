@@ -10,28 +10,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Custom JPanel that acts as the canvas for drawing and manipulation
+ * A custom JPanel that serves as a canvas for drawing and manipulation.
+ * It supports drawing paths, erasing, filling shapes with a bucket tool,
+ * and undo/redo operations.
  */
 public class DrawingCanvas extends JPanel {
-	private final List<DrawablePath> drawablePaths = new ArrayList<>(); // List to store drawn paths
-	private final List<DrawablePath> undonePaths = new ArrayList<>(); // List to store undone paths
-	private Path2D.Double currentPath; // Current path being drawn
-	private Color currentColor = Color.BLACK; // Default color
-	private Color fillColor = Color.ORANGE; // Fill Color of the Shape
+	// List to store drawn paths
+	private final List<DrawablePath> drawablePaths = new ArrayList<>();
+	// List to store undone paths
+	private final List<DrawablePath> undonePaths = new ArrayList<>();
+	// Current path being drawn, null when not drawing
+	private Path2D.Double currentPath;
+	// Default color for drawing
+	private Color currentColor = Color.BLACK;
+	// Fill Color of the Shape
+	private Color fillColor;
+	// Flag to indicate if the bucket tool is active
 	private boolean isBucketToolOn = false;
-	private boolean isErasing = false; // Flag to indicate if the eraser is active
-	private int brushSize = 5; // Brush Size
+	// Flag to indicate if the eraser is active
+	private boolean isErasing = false;
+	// Brush Size for drawing
+	private int brushSize = 5;
 
 	/**
 	 * Constructs a new DrawingCanvas with default settings.
 	 */
 	public DrawingCanvas() {
+		// Mouse event listeners for drawing and bucket fill operations
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				// Check if the bucket tool is active to determine drawing behavior
 				if (isBucketToolOn) {
 					// Call the fill method with the mouse coordinates
-					fillbucket(e.getX(), e.getY(), (Graphics2D) getGraphics());
+					fillbucket(e.getX(), e.getY(), getGraphics());
 				} else {
 					// If the bucket tool is not activated, start drawing a path
 					currentPath = new Path2D.Double();
@@ -69,7 +81,7 @@ public class DrawingCanvas extends JPanel {
 
 		// Render completed shapes
 		for (DrawablePath drawablePath : drawablePaths) {
-			if (drawablePath.isFilled) {
+			if (drawablePath.isFilled()) {
 				g2d.setColor(drawablePath.getFillColor());
 				g2d.fill(drawablePath.getPath());
 			}
@@ -90,7 +102,9 @@ public class DrawingCanvas extends JPanel {
 		}
 	}
 
-	private void fillbucket(int x, int y, Graphics2D g2d) {
+	private void fillbucket(int x, int y, Graphics g) {
+		if(g == null){return;}
+		Graphics2D g2d = (Graphics2D) g;
 		if (isBucketToolOn) {
 			Point fillPoint = new Point(x, y);
 			for (DrawablePath drawablePath : drawablePaths) {
@@ -100,6 +114,7 @@ public class DrawingCanvas extends JPanel {
 					Area area = new Area(path);
 					g2d.setColor(currentColor);
 					g2d.fill(area);
+					drawablePath.setFilledColor(currentColor);
 					drawablePaths.add(new DrawablePath(path, currentColor, area, brushSize, true, fillColor));
 					currentPath = null;
 					undonePaths.clear(); // Clear the undone paths when a new drawing is added
@@ -110,16 +125,18 @@ public class DrawingCanvas extends JPanel {
 	}
 
 	/**
-	 * returns current status of Erasing
+	 * Returns the current status of Erasing.
+	 *
+	 * @return true if erasing is active, false otherwise.
 	 */
 	public boolean isErasing() {
 		return isErasing;
 	}
 
 	/**
-	 * Changes the size of the brush used for drawing
+	 * Changes the size of the brush used for drawing.
 	 *
-	 * @param size The New Brush Size.
+	 * @param size The new brush size.
 	 */
 	public void changeSize(int size) {
 		this.brushSize = size;
@@ -128,7 +145,7 @@ public class DrawingCanvas extends JPanel {
 	/**
 	 * Sets the current drawing color.
 	 *
-	 * @param color The new color to use for the drawing
+	 * @param color The new color to use for the drawing.
 	 */
 	public void setColor(Color color) {
 		this.currentColor = color;
@@ -174,17 +191,31 @@ public class DrawingCanvas extends JPanel {
 	}
 
 	/**
-	 * A record to represent a drawable path with its color.
-	 *
-	 * @param path The Path to be drawn.
-	 *
-	 * @param color The color of the path
+	 * A class to represent a drawable path with its color, fill shape,
+	 * stroke size, and whether it is filled.
 	 */
-	private record DrawablePath(Path2D.Double path, Color color, Shape fillshape, int StrokeSize, boolean isFilled, Color fillColor) {
+	private static class DrawablePath {
+
+		private Path2D.Double path;
+		private Color color;
+		private Shape fillshape;
+		private int strokesize;
+		private boolean isFilled;
+		private Color fillColor;
+
+		public DrawablePath(Path2D.Double path, Color color, Shape fillshape, int StrokeSize, boolean isFilled, Color fillColor) {
+			this.path = path;
+			this.color = color;
+			this.fillshape = fillshape;
+			this.strokesize = StrokeSize;
+			this.isFilled = isFilled;
+			this.fillColor = fillColor;
+		}
+
 		/**
-		 * Returns the path to be drawn
+		 * Returns the path to be drawn.
 		 *
-		 * @return the path
+		 * @return the path.
 		 */
 		public Path2D.Double getPath() {
 			return path;
@@ -193,7 +224,7 @@ public class DrawingCanvas extends JPanel {
 		/**
 		 * Returns the color of the path.
 		 *
-		 * @return the Color
+		 * @return the Color.
 		 */
 		public Color getColor() {
 			return color;
@@ -202,18 +233,18 @@ public class DrawingCanvas extends JPanel {
 		/**
 		 * Returns the size of the path stroke.
 		 *
-		 * @return the size of the stroke
+		 * @return the size of the stroke.
 		 */
 		public int getStrokeSize() {
-			return StrokeSize;
-		}
-
-		public Color getFillShape() {
-			return fillColor;
+			return strokesize;
 		}
 
 		public Color getFillColor() {
 			return fillColor;
+		}
+
+		public void setFilledColor(Color c) {
+			this.fillColor = c;
 		}
 
 		public boolean isFilled() {
