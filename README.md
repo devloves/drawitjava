@@ -1,8 +1,13 @@
 # DrawIT-Java ( A Java Based Digital Painting Software )
 
 :star: Star the project on github - It motivates me to work!
-
-<img src='https://github.com/devloves/drawitjava/assets/65783463/d095d1a6-6d7b-47a3-bed2-3cd613dc6975' width='500'>
+<div style="display: flex">
+  <div>
+    <img src='https://github.com/devloves/drawitjava/assets/65783463/461a20d3-dc95-47ae-ae97-2fda44e0a3f0' width='300'>
+    <br>
+    Version 0.0.2
+  </div>
+</div>
 
 ## Table of Content
 - [Installation](#installation)
