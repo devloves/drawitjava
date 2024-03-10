@@ -17,6 +17,7 @@ public class DrawingCanvas extends JPanel {
 	private final List<DrawablePath> undonePaths = new ArrayList<>(); // List to store undone paths
 	private Path2D.Double currentPath; // Current path being drawn
 	private Color currentColor = Color.BLACK; // Default color
+	private Color fillColor = Color.ORANGE; // Fill Color of the Shape
 	private boolean isBucketToolOn = false;
 	private boolean isErasing = false; // Flag to indicate if the eraser is active
 	private int brushSize = 5; // Brush Size
@@ -42,7 +43,7 @@ public class DrawingCanvas extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (currentPath != null) {
-					drawablePaths.add(new DrawablePath(currentPath, currentColor, new Area(currentPath), brushSize));
+					drawablePaths.add(new DrawablePath(currentPath, isErasing ? getBackground() : currentColor, new Area(currentPath), brushSize, false, fillColor));
 					currentPath = null;
 					undonePaths.clear(); // Clear the undone paths when a new drawing is added
 					repaint();
@@ -68,25 +69,24 @@ public class DrawingCanvas extends JPanel {
 
 		// Render completed shapes
 		for (DrawablePath drawablePath : drawablePaths) {
-			g2d.setColor(getBackground());
-			g2d.fill(drawablePath.getFillColor());
+			if (drawablePath.isFilled) {
+				g2d.setColor(drawablePath.getFillColor());
+				g2d.fill(drawablePath.getPath());
+			}
 			g2d.setColor(drawablePath.getColor());
 			g2d.setStroke(new BasicStroke(drawablePath.getStrokeSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 			g2d.draw(drawablePath.getPath());
 		}
 
 		// Render current drawing path
-		// Render current drawing path
 		if (currentPath != null) {
 			if (isErasing) {
 				g2d.setColor(getBackground());
-				g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				g2d.draw(currentPath);
 			} else {
 				g2d.setColor(currentColor);
-				g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				g2d.draw(currentPath);
 			}
+			g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+			g2d.draw(currentPath);
 		}
 	}
 
@@ -95,12 +95,14 @@ public class DrawingCanvas extends JPanel {
 			Point fillPoint = new Point(x, y);
 			for (DrawablePath drawablePath : drawablePaths) {
 				Path2D.Double path = drawablePath.getPath();
-				if (path.contains(fillPoint)) {
+				if (path.contains(fillPoint) && drawablePath.getColor() != getBackground()) {
 					// Create an Area from the path and fill it
 					Area area = new Area(path);
 					g2d.setColor(currentColor);
 					g2d.fill(area);
-					new DrawablePath(path, currentColor, area, brushSize);
+					drawablePaths.add(new DrawablePath(path, currentColor, area, brushSize, true, fillColor));
+					currentPath = null;
+					undonePaths.clear(); // Clear the undone paths when a new drawing is added
 					break;
 				}
 			}
@@ -178,7 +180,7 @@ public class DrawingCanvas extends JPanel {
 	 *
 	 * @param color The color of the path
 	 */
-	private record DrawablePath(Path2D.Double path, Color color, Shape fillcolor, int StrokeSize) {
+	private record DrawablePath(Path2D.Double path, Color color, Shape fillshape, int StrokeSize, boolean isFilled, Color fillColor) {
 		/**
 		 * Returns the path to be drawn
 		 *
@@ -206,8 +208,16 @@ public class DrawingCanvas extends JPanel {
 			return StrokeSize;
 		}
 
-		public Shape getFillColor() {
-			return fillcolor;
+		public Color getFillShape() {
+			return fillColor;
+		}
+
+		public Color getFillColor() {
+			return fillColor;
+		}
+
+		public boolean isFilled() {
+			return fillColor != null;
 		}
 	}
 }
