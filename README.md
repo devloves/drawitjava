@@ -31,7 +31,7 @@
 | Brush Color   | 🟢 Done |
 | Undo | 🟢 Done |
 | Redo  | 🟢 Done |
-| Line Draw  | 🟡 Todo |
+| Line Draw  | 🟢 Done |
 | Circle Draw  | 🟡 Todo |
 | Bucket Fill  | 🟡 Todo |
 
