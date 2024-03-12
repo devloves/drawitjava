@@ -56,6 +56,12 @@ public class DrawingApp extends JFrame {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		JButton lineTool = new JButton("Line");
+		lineTool.addActionListener(e -> {
+			canvas.toggleLineTool();
+			bucketTool.setBackground(canvas.isLineToolEnabled() ? Color.GREEN : Color.WHITE);
+		});
+		sidePanel.add(lineTool);
 		sidePanel.add(bucketTool);
         sidePanel.add(eraser);
 		JButton undoButton = new JButton();

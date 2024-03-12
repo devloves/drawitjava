@@ -28,9 +28,16 @@ public class DrawingCanvas extends JPanel {
 	// Flag to indicate if the bucket tool is active
 	private boolean isBucketToolOn = false;
 	// Flag to indicate if the eraser is active
+	private boolean isDrawingLine = false;
+	// Flag to indicate drawing of a line.
 	private boolean isErasing = false;
 	// Brush Size for drawing
 	private int brushSize = 5;
+
+	private int lastX = 0;
+	private int lastY = 0;
+	private int firstX = 0;
+	private int firstY = 0;
 
 	/**
 	 * Constructs a new DrawingCanvas with default settings.
@@ -48,6 +55,8 @@ public class DrawingCanvas extends JPanel {
 					// If the bucket tool is not activated, start drawing a path
 					currentPath = new Path2D.Double();
 					currentPath.moveTo(e.getX(), e.getY());
+					firstX = e.getX();
+					firstY = e.getY();
 					repaint();
 				}
 			}
@@ -67,7 +76,17 @@ public class DrawingCanvas extends JPanel {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				if (currentPath != null) {
-					currentPath.lineTo(e.getX(), e.getY());
+					if (isDrawingLine) {
+						// Clear the previous path and create a new one for the straight line
+						currentPath.reset();
+						currentPath.moveTo(firstX, firstY);
+						currentPath.lineTo(e.getX(), e.getY());
+					} else {
+						// Free drawing mode
+						currentPath.lineTo(e.getX(), e.getY());
+					}
+					lastX = e.getX();
+					lastY = e.getY();
 					repaint();
 				}
 			}
@@ -98,7 +117,11 @@ public class DrawingCanvas extends JPanel {
 				g2d.setColor(currentColor);
 			}
 			g2d.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-			g2d.draw(currentPath);
+			if(isDrawingLine) {
+				g2d.drawLine(firstX, firstY, lastX, lastY);
+			} else {
+				g2d.draw(currentPath);
+			}
 		}
 	}
 
@@ -160,6 +183,13 @@ public class DrawingCanvas extends JPanel {
 	}
 
 	/**
+	 * Toggles the Line mode on or off.
+	 */
+	public void toggleLineTool() {
+		this.isDrawingLine = !this.isDrawingLine;
+	}
+
+	/**
 	 * Toggles the bucket fill mode on or off.
 	 */
 	public void toggleBucketFill() {
@@ -193,6 +223,15 @@ public class DrawingCanvas extends JPanel {
 	 */
 	public boolean isBucketToolEnabled() {
 		return isBucketToolOn;
+	}
+
+	/**
+	 * Is bucket tool enabled boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isLineToolEnabled() {
+		return isDrawingLine;
 	}
 
 	/**
