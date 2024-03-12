@@ -33,11 +33,7 @@
 | Redo  | 🟢 Done |
 | Line Draw  | 🟢 Done |
 | Circle Draw  | 🟡 Todo |
-| Bucket Fill  | 🟡 Todo |
-
-### Known Bugs & Issues | ⚒️
-- Increasing Brush size also affects all the strokes within the canvas
-- Eraser Tool doesnt work properly.
+| Bucket Fill  | 🟢 Done |
 
 ## Contributors & Creators
 - @devloves
